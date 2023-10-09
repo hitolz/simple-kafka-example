@@ -1,0 +1,8 @@
+[app]
+host = "127.0.0.1"
+port = 8088
+
+
+[kafka_config]
+brokers = "localhost:9092"
+group_id = "test_group"
