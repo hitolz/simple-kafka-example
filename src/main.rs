@@ -14,10 +14,11 @@ pub async fn main() {
     init_log();
     let x = &setting::SETTING;
     let app = &x.app;
-
+    let kafka_config = &x.kafka_config;
     let _init_task = tokio::spawn(async {
-        simple_kafka::kafka_init::init_producers().await;
-        simple_kafka::kafka_init::init_consumers("test-topic", message_handler).await;
+        let simple_kafka_config:simple_kafka::KafkaConfig = kafka_config.to_owned().into();
+        simple_kafka::kafka_init::init_producers(&simple_kafka_config).await;
+        simple_kafka::kafka_init::init_consumers(&simple_kafka_config,"test-topic", message_handler).await;
     });
     
     info!("server listening at http://{}:{}", app.host, app.port);

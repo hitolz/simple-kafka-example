@@ -5,4 +5,4 @@ port = 8088
 
 [kafka_config]
 brokers = "localhost:9092"
-group_id = "test_group"
+group_id = "test_group2"

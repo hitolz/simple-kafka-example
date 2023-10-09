@@ -18,6 +18,15 @@ pub struct KafkaConfig {
     pub group_id: String,
 }
 
+impl Into<simple_kafka::KafkaConfig> for KafkaConfig {
+    fn into(self) -> simple_kafka::KafkaConfig {
+        simple_kafka::KafkaConfig{
+            brokers: self.brokers,
+            group_id: self.group_id,
+        }
+    }
+}
+
 #[derive(Deserialize, Default, Debug)]
 pub struct Setting {
     pub app: App,
