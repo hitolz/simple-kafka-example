@@ -2,7 +2,31 @@ https://crates.io/crates/simple-kafka 示例代码。
 
 ## 使用方法
 
-在 main 中，通过异步线程初始化 kafka 生产者及消费者。
+读取配置文件，并将其转换为 simple_kafka::KafkaConfig
+```toml
+[kafka_config]
+brokers = "localhost:9092"
+group_id = "test_group2"
+```
+
+```rust
+#[derive(Deserialize, Default, Debug,Clone)]
+pub struct KafkaConfig {
+    pub brokers: String,
+    pub group_id: String,
+}
+
+impl Into<simple_kafka::KafkaConfig> for KafkaConfig {
+    fn into(self) -> simple_kafka::KafkaConfig {
+        simple_kafka::KafkaConfig{
+            brokers: self.brokers,
+            group_id: self.group_id,
+        }
+    }
+}
+```
+
+在 main 中，通过 tokio::spawn 线程初始化 kafka 生产者及消费者。
 ```rust
 let _init_task = tokio::spawn(async {
     let simple_kafka_config:simple_kafka::KafkaConfig = kafka_config.to_owned().into();
