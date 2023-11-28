@@ -18,7 +18,7 @@ pub async fn main() {
     let _init_task = tokio::spawn(async {
         let simple_kafka_config:simple_kafka::KafkaConfig = kafka_config.to_owned().into();
         simple_kafka::kafka_init::init_producers(&simple_kafka_config).await;
-        simple_kafka::kafka_init::init_consumers(&simple_kafka_config,"test-topic", message_handler).await;
+        simple_kafka::kafka_init::init_consumers(&simple_kafka_config,"my_topic", message_handler).await;
     });
     
     info!("server listening at http://{}:{}", app.host, app.port);
